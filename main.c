@@ -2,20 +2,17 @@
 #include <GL/glut.h>
 #include <stdio.h>
 // Função callback chamada para fazer o desenho
-void Desenha(char action)
-{
-     glMatrixMode(GL_MODELVIEW);
-     glLoadIdentity();
-                   
-     // Limpa a janela de visualização com a cor de fundo especificada
-     glClear(GL_COLOR_BUFFER_BIT);
-
-     // Especifica que a cor corrente é vermelha
-     //         R     G     B
-     glColor3f(1.0f, 0.0f, 0.0f);
-
-     // Desenha um quadrado preenchido com a cor corrente
-     glBegin(GL_QUADS);
+int tx = 0;
+int ty = 0;
+int tz = 0;
+int scale = 0;
+int rx = 0;
+int ry = 0;
+int rz = 0;
+char action = 'n';
+GLfloat spin = 0;
+void quadrado(void){
+    glBegin(GL_QUADS);
                glVertex2i(0,15);
                glVertex2i(0,0);
                // Especifica que a cor corrente é azul
@@ -23,9 +20,27 @@ void Desenha(char action)
                glVertex2i(15,0);
                glVertex2i(15,15);               
      glEnd();
+}
+void Desenha(void)
+{
 
+    glClear(GL_COLOR_BUFFER_BIT);
+     //glMatrixMode(GL_MODELVIEW);
+    glPushMatrix(); 
+     //glLoadIdentity();
+
+     glColor3f(1.0f, 0.0f, 0.0f);
+
+
+    quadrado();
+
+    glPopMatrix();
+     // Desenha um quadrado preenchido com a cor corrente
+     
      // Executa os comandos OpenGL
      glFlush();
+    glutSwapBuffers();
+
 }
 
 // Inicializa parâmetros de rendering
@@ -56,8 +71,60 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 }
 
 // Programa Principal 
+void direcional(int key, int x, int y){
+     switch (key)
+  {
+    case  GLUT_KEY_UP:
+        printf("up");
+       if (action == 'r')
+          ry+= 1;
+          glMatrixMode(GL_PROJECTION);
+          glLoadIdentity();
+          glRotatef(spin,rx,ry,rz);
 
-char action = "n"; 
+       if (action == 't')
+          ty+= 1;
+           glMatrixMode(GL_PROJECTION);
+           glLoadIdentity();
+           glTranslatef(tx,ty,tz);
+
+    case  GLUT_KEY_DOWN:
+       if (action == 'r')
+          ry-= 1;
+          glMatrixMode(GL_PROJECTION);
+          glLoadIdentity();
+          glRotatef(spin,rx,ry,rz);
+       if (action == 't')
+          ty-= 1;
+           glMatrixMode(GL_PROJECTION);
+           glLoadIdentity();
+           glTranslatef(tx,ty,tz);
+    case  GLUT_KEY_LEFT:
+       if (action == 'r')
+          rx-= 1;
+          glMatrixMode(GL_PROJECTION);
+          glLoadIdentity();
+          glRotatef(spin,rx,ry,rz);
+       if (action == 't')
+          tx-= 1;
+           glMatrixMode(GL_PROJECTION);
+           glLoadIdentity();
+           glTranslatef(tx,ty,tz);
+    case  GLUT_KEY_RIGHT:
+       if (action == 'r')
+          rx+= 1;
+          glMatrixMode(GL_PROJECTION);
+          glLoadIdentity();
+          glRotatef(spin,rx,ry,rz);
+       if (action == 't')
+          tx+= 1;
+           glMatrixMode(GL_PROJECTION);
+           glLoadIdentity();
+           glTranslatef(tx,ty,tz);
+    }
+    glutPostRedisplay();    
+}
+ 
 void Keyboard(unsigned char key, int x, int y)
 {
   switch (key)
@@ -67,6 +134,7 @@ void Keyboard(unsigned char key, int x, int y)
 	  break;
 
   case 'r':
+      printf("rotate");
       action = 'r';
 	  //rotate();
 	  break;
@@ -80,6 +148,7 @@ void Keyboard(unsigned char key, int x, int y)
       action = 'v';
 	  //velocidade();
 	  break;
+  
   }
 }
 
@@ -92,9 +161,14 @@ int main(int argc, char** argv)
      glutInitWindowSize(500,500);
      glutInitWindowPosition(10,10);
      glutCreateWindow("Quadrado");
+
+     
      glutDisplayFunc(Desenha);
      glutReshapeFunc(AlteraTamanhoJanela);
-     Inicializa();
+     glutSpecialFunc(direcional);
      glutKeyboardFunc (Keyboard);
+     
+     
+    Inicializa();
      glutMainLoop();
 }
