@@ -8,48 +8,49 @@ int init()
 {
    glClearColor(0, 0, 0, 0);
    glMatrixMode(GL_PROJECTION);
-   glLoadIdentitY();
+   glLoadIdentity();
    gluOrtho2D(0, 100, 0, 100);
 }
-
+// funcao que desenha na tela
 void display()
 {
    glClear(GL_COLOR_BUFFER_BIT);
    glMatrixMode(GL_MODELVIEW);
-   glLoadIdentitY();
+   glLoadIdentity();
    glTranslatef(translacaoX, translacaoY, 0); // translada para a posicao alterada
    glTranslatef(5, 5, 0);
    glRotatef(rotacaoY, 0.0, 0.0, 1);
    glTranslatef(-5, -5, 0);
    glBegin(GL_POLYGON); // desenha o quadrado
-   glColor3f(1, 0, 0);
-   glVertex2i(0, 0);
-   glColor3f(1, 0, 0);
-   glVertex2i(10, 0);
-   glColor3f(1, 0, 0);
-   glVertex2i(10, 10);
-   glColor3f(1, 0, 0);
-   glVertex2i(0, 10);
+   	glColor3f(1, 0, 0);
+   	glVertex2i(0, 0);// vertices
+   	glColor3f(1, 0, 0);
+   	glVertex2i(10, 0);
+   	glColor3f(1, 0, 0);
+   	glVertex2i(10, 10);
+   	glColor3f(1, 0, 0);
+   	glVertex2i(0, 10);
    glEnd();
    glFlush();
 }
+// funcao que pega o comando transladar ou rotacionar
 void teclasChar(unsigned char key, int x, int y)
 {
    switch (key)
    {
    case 'R':
    case 'r':
-      comando = 'r';
+      comando = 'r';// rotaciona
       break;
    case 'T':
    case 't':
-      comando = 't';
+      comando = 't';// translada
       break;
    }
-   glutPostRedisplay();
+   glutPostRedisplay();// redesenha com a nova opcao ativa
 }
 
-void teclasEspeciais(int key)
+void TeclasEspeciais(int key, int x, int y)
 {
    if (comando == 't')
    {
@@ -89,24 +90,19 @@ void teclasEspeciais(int key)
       {
          rotacaoY += rotacaoX;
       }
-
-
    }
-   glutPostRedisplay();
+   glutPostRedisplay();// redesenha com os novos valores
 }
 
 int main(int argc, char **argv)
 {
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-
    glutInitWindowSize(500, 500);
-   //glutInitWindowPosition(600, 0);
-
-   glutCreateWindow("Atividade 1 \n- Por Higor Celante");
+   glutCreateWindow("Atividade 1 - Por Higor Celante");
    glutDisplayFunc(display);
    init();
-   glutteclasChar(teclasChar);
-   glutSpecialFunc(teclasEspeciais);
+   glutKeyboardFunc(teclasChar);
+   glutSpecialFunc(TeclasEspeciais);
    glutMainLoop();
 }
