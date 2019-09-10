@@ -1,4 +1,4 @@
-# Cube---Glut-OpenGL
+# Red Cube OpenGL
 ### Um cubo vermelho feito em OpenGL que translada e rotaciona por meio de interação com o teclado.
 
 
