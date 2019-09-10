@@ -12,4 +12,4 @@
 
 Adotando-se o centróide do quadrado como ponto de rotação, considerando-se eventuais transformações geométricas que ele possa ter sofrido anteriormente. Para transitar entre esses dois modos, o usuário deve pressionar a teclar ‘r’ para entrar no modo de rotação e a tecla ‘t’ para entrar no modo de translação. O programa começa no modo de translação, antes de qualquer tecla ser pressionada.
 
-![Executando]("https://raw.githubusercontent.com/HCelante/Red-Cube-OpenGL/master/img/Captura%20de%20tela%20de%202019-09-10%2016-32-58.png?token=ADSGJG5OTO5C3DEZVYDCMIK5O7564")
+![Executando]("https://imgur.com/LF4vgrO")
